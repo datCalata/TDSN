@@ -1,6 +1,7 @@
-function [Bcof, Acof] = pasobanda(BW,f0,Fs,A)
+function [Bcof, Acof] = pasobanda(BW,f0,Fs,G)
 %UNTITLED Summary of this function goes here
 %   Detailed explanation goes here
+A = 10^(G/40);
 w0 = 2*pi*f0/Fs;
 alpha = sin(w0)*sinh( log(2)/2 * BW * w0/sin(w0));
 b0 =   1 + alpha*A;

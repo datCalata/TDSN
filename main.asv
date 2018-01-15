@@ -10,11 +10,11 @@ printFilter(Binv,Ainv,'Funcion Inversa Estable')
 
 
 %%Definicion de Filtros
-[Blpf, Alpf] = pasobajo(2,5000,48e3,13);
-[Bhpf, Ahpf] = pasoalto(2,20e3,48e3,-10);
-[Bpb1, Apb1] = pasobanda(1,8000,48e3,4.5);
-[Bpb2, Apb2] = pasobanda(2,6300,48e3,5.4);
-[Bpb3, Apb3] = pasobanda(1,12500,48e3,3.5);
+[Blpf, Alpf] = pasobajo(2,4000,48e3,13);
+[Bhpf, Ahpf] = pasoalto(2,16e3,48e3,-6);
+[Bpb1, Apb1] = pasobanda(1.5,8000,48e3,6.83);
+[Bpb2, Apb2] = pasobanda(1,5000,48e3,1);
+[Bpb3, Apb3] = pasobanda(1,12500,48e3,3);
 
 figure(3)
 printFilter(Bhpf,Ahpf,'Filtro Paso Alto');
