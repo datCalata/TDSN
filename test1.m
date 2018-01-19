@@ -42,14 +42,16 @@ bcoefs = [B_lpf;B_pbf1;B_pbf2;B_pbf3;B_hpf];
 acoefs = [A_lpf;A_pbf1;A_pbf2;A_pbf3;A_hpf];
 hfiltros = concatfilters(bcoefs,acoefs);
 
-muestraImitar(hc,hfiltros,w,1)
+%Similitud
+hcomp = hfiltros.*hsist;
 
 
+%% Senales de prueba
+[x8, fs8] = audioread('test_8.wav');
+[x16, fs16] = audioread('test_16.wav');
+[x44, fs44] = audioread('test_44.wav');
 
 
-%% Comprovacion
-hfiltrada = abs(hsist).*abs(hc);
-fprintf("Error cometido %f")
 
 
 %% Representacion
@@ -106,7 +108,19 @@ title('Hfiltos(z)');
 ylabel('dB')
 xlabel('w/Pi rad')
 
+%Plot imitar
+muestraImitar(hc,hfiltros,w,4);
 
-
-
+%Comprovacion hap
+figure(5)
+subplot(2,1,1);
+plot(w/pi,abs(hap))
+title('Hap(z)');
+ylabel('Unidades Lineales')
+xlabel('w/Pi rad')
+subplot(2,1,2);
+plot(w/pi,abs(hfiltrada))
+title('Hresultado(z)');
+ylabel('Unidades Lineales')
+xlabel('w/Pi rad')
 
