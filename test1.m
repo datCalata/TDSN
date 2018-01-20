@@ -1,6 +1,8 @@
 %% Calculos 
 clear
 clc
+
+fs = 48e3;
 [Z, P, K] = room('jorge.cmaeso@alumnos.upm.es', 'angela.burgaleta.ledesma@alumnos.upm.es');
 
 %Calculo de H
@@ -42,6 +44,7 @@ bcoefs = [B_lpf;B_pbf1;B_pbf2;B_pbf3;B_hpf];
 acoefs = [A_lpf;A_pbf1;A_pbf2;A_pbf3;A_hpf];
 hfiltros = concatfilters(bcoefs,acoefs);
 
+
 %Similitud
 hcomp = hfiltros.*hsist;
 
@@ -50,9 +53,28 @@ hcomp = hfiltros.*hsist;
 [x8, fs8] = audioread('test_8.wav');
 [x16, fs16] = audioread('test_16.wav');
 [x44, fs44] = audioread('test_44.wav');
+%Calculo de cambio de frecuencia fraccionario
+[P8, Q8] = rat(fs8/fs);
+[P16, Q16] = rat(fs16/fs);
+[P44, Q44] = rat(fs44/fs);
 
+% Resample
+x81 = resample(x8,P8,Q8,10,100);
+x161 = resample(x16,P16,Q16,10,100);
+x441 = resample(x44,P44,Q44,10,100);
 
+Y8 = procesar_senal(bcoefs,acoefs,B_sist,A_sist,x81);
+Y16 = procesar_senal(bcoefs,acoefs,B_sist,A_sist,x161);
+Y44 = procesar_senal(bcoefs,acoefs,B_sist,A_sist,x441);
 
+Ysist = filter(B_sist,A_sist,x441);
+
+figure(1)
+spectrogram(x441(:,1), 256, [], [], fs, 'yaxis');
+figure(2)
+spectrogram(Ysist(:,1), 256, [], [], fs, 'yaxis');
+figure(3)
+spectrogram(Y44(:,1), 256, [], [], fs, 'yaxis');
 
 %% Representacion
 figure(1)
